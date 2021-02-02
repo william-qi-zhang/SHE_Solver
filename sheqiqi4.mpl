@@ -56,15 +56,16 @@ uses plots;
             local counter := 0;
             local num_solution:=0;
             local color_solution:=["Purple","YellowGreen","YellowGreen","YellowGreen","YellowGreen","Purple","DarkSeaGreen","DarkSalmon","Goldenrod","IndianRed","Purple"];
-            local symbol_solution:=["asterisk","diagonalcross","solidcircle","solidcircle","asterisk","solidbox","solidcircle","asterisk"];
+            local symbol_solution:=["diagonalcross","diagonalcross","solidcircle","solidcircle","asterisk","solidbox","solidcircle","asterisk"];
 
             for counter from 1 by 1 to solutions do
                 # print(angles[mod_index,1,counter,2]):
                 local ele_level := 0:
                 local max_ele_level := 1:
+                local xtest := 0:
 
                 local temp := 0:
-                local patterns := [-1,1,1,-1,1,-1,1,-1,1]:
+                local patterns := [1,-1,1,-1,1,-1,1,-1,1]:
                 for temp from 1 by 1 to 9 do 
                     if (angles[mod_index,1,counter,2,temp] <> patterns[temp]) then max_ele_level := 0: break; end if: 
                 end do:
@@ -75,8 +76,13 @@ uses plots;
                     if num_solution>4 then
                         break:
                     end if:
-                    if modulation[1] >= 6/100 then xtest := 4; else xtest := 3; end if:
-                    if (xtest = num_solution) or (num_solution = 2) then   
+                    if modulation[1] >= 46/100 and modulation[1] <= 52/100 or (modulation[1] >= 66/100 and modulation[1] <= 81/100 and modulation[1] <> 67/100) then 
+                        color_solution:=["YellowGreen","Purple","YellowGreen","YellowGreen","YellowGreen","Purple","DarkSeaGreen","DarkSalmon","Goldenrod","IndianRed","Purple"];
+                        xtest := 2; 
+                    else 
+                        color_solution:=["Purple","YellowGreen","YellowGreen","YellowGreen","YellowGreen","Purple","DarkSeaGreen","DarkSalmon","Goldenrod","IndianRed","Purple"];
+                        xtest := 1; end if:
+                    if (xtest = num_solution) or (xtext = num_solution) then   
                     plot_counter := plot_counter + 1:
                     p(plot_counter) := plot(modulation,angles[mod_index,1,counter,1],x=0..1,y=0..90,style = point,symbol=symbol_solution[num_solution],thickness=0,axis = [gridlines],color = color_solution[num_solution]):
                     # print(i,modulation,angles[mod_index,1,counter,1]);
